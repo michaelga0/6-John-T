@@ -1,0 +1,28 @@
+name: Auto update and deploy from upstream
+
+on:
+  schedule:
+    - cron:  '*/30 * * * *'
+  workflow_dispatch:
+
+jobs:
+  sync_latest_from_upstream:
+    runs-on: ubuntu-latest
+    name: Sync latest commits from upstream repo
+
+    steps:
+    - name: Checkout target repo
+      uses: actions/checkout@v2
+      with:
+        ref:  main
+        persist-credentials: false
+
+    - name: Sync upstream changes
+      id: sync
+      uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+      with:
+        target_sync_branch: main
+        target_repo_token: ${{ secrets.ACCESS_TOKEN }}
+        upstream_sync_branch: main
+        upstream_sync_repo: csc301-2023-winter/6-John-T
+        upstream_repo_access_token: ${{ secrets.ACCESS_TOKEN }}
