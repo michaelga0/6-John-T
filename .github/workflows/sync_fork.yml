@@ -1,4 +1,4 @@
-name: Auto update and deploy from upstream
+name: manager frontend sync
 
 on:
   schedule:
